@@ -253,5 +253,6 @@ extern void *memset(void *dst, int c, size_t size);
  */
 
 # define IF(x) .x=
+//# define IF(x)
 
 #endif//_SYSTEM_INIT_H_

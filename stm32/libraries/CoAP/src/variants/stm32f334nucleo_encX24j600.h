@@ -20,42 +20,16 @@
  * Authors:  Pekka Nikander <pekka.nikander@ell-i.org>  2014
  */
 
-#ifndef _STM32F334NUCLEO_SPI_H_
-# define _STM32F334NUCLEO_SPI_H_
+#ifndef  _STM32F334NUCLEO_ENCX24J600_H_
+# define _STM32F334NUCLEO_ENCX24J600_H_
 
-# include <system_init.h>
-# include <SPI/spiStruct.h>
+# define ENCX24J600_SPI    SPI1struct /* XXX Move to the constructor */
+# define ENCX24J600_CS_PIN 2
 
-/**
- * Declarations for externally visible SPI init records.
- *
- * STM32F334 has SPI port 1.
- */
-SPI_INIT_DEFAULT(1);
+# include <encX24j600/ENCX24J600Class.h>
 
-# define BOARD_SPI_DEFAULT_SS 10 /* XXX: Should be D10 but that is not defined yet */
+/* NB. Shall be evaluated at compile time, no runtime static C++ constructors allowed */
+static const ENCX24J600Class ENCX24J600(ENCX24J600_SPI, /* XXX FIXME */
+                                        ENCX24J600_CS_PIN /* Slave select XXX currently dummy FIXME */);
 
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-/* Defined in stm32f334nucleo_spi.cpp */
-extern struct SPIdynamicFields _SPI1dynamicFields;
-
-# ifdef __cplusplus
-}
-# endif
-
-DEFINE_SPI_STRUCT(1, B, 6, 5, A, 6, 5, A, 7, 5, A, 5, 5, &_SPI1dynamicFields) ;
-
-# ifdef __cplusplus
-
-#  include <SPI/SPIClass.h>
-
-extern Pin2Int7 spimap1;
-
-static const class SPIClass SPI  (SPI1struct, spimap1);
-
-# endif //__cplusplus
-
-#endif//_STM32F334NUCLEO_SPI_H_
+#endif//_STM32F334NUCLEO_ENCX24J600_H_
